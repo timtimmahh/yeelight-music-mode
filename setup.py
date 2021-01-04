@@ -4,7 +4,8 @@ requires = [
     'flask',
     'yeelight',
     'pyaudio',
-    'aubio'
+    'aubio',
+    'numpy'
 ]
 
 setup(

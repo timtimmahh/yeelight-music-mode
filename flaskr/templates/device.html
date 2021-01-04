@@ -14,27 +14,45 @@
     <h3>IP: {{ g.device.data.ip }} Port: {{ g.device.data.port }}</h3>
     <form method="post">
         <div>
-            <label for="device_name">Name:</label>
-            <input id="device_name" name="device_name" type="text"
+            <label for="name">Name:</label>
+            <input id="name" name="name" type="text"
                    value="{{ g.device.data['capabilities']['name'] }}">
         </div>
         <label for="effect">Effect:</label>
         <select name="effect" id="effect">
-            <option value="smooth">Smooth</option>
-            <option value="sudden">Sudden</option>
+            {% if g.device.data.effect == 'smooth' %}
+                <option value="smooth" selected>Smooth</option>
+                <option value="sudden">Sudden</option>
+            {% else %}
+                <option value="smooth">Smooth</option>
+                <option value="sudden" selected>Sudden</option>
+            {% endif %}
         </select>
         <div style="text-align: center; width:100%; display: flex; margin-top: 10px">
-            <label for="duration" style="display: block; line-height: 150%; text-align: center">Duration:</label>
+            <label for="duration" style="display: block; line-height: 200%; text-align:
+            center">Duration:</label>
             <input style="width:100%" id="duration" name="duration" type="range"
                    min="30"
                    max="1000"
                    value="{{ g.device.data.duration }}"
                    oninput="durationInput.value=value">
+            <!--suppress HtmlFormInputWithoutLabel -->
             <input size="4"
                    type="number"
                    id="durationInput"
-                   maxlength="4" value="{{ g.device.data.duration }}">
+                   maxlength="4" value="{{ g.device.data.duration }}"
+                   oninput="duration.value=value">
         </div>
-        <button type="submit">Update</button>
+        <label for="color_flow">Color Flow Mode:</label>
+        <select name="color_flow" id="color_flow">
+            {% if g.device.data.color_flow_mode == 'rgb' %}
+                <option value="rgb" selected>RGB</option>
+                <option value="hsv">HSV</option>
+            {% else %}
+                <option value="rgb">RGB</option>
+                <option value="hsv" selected>HSV</option>
+            {% endif %}
+        </select>
+        <button type="submit" style="margin-top: 10px;">Update</button>
     </form>
 {% endblock %}

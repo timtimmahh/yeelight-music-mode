@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, render_template, g, request
-from Configuration import Configuration, data
+
+from Configuration import Configuration
 
 app = Flask(__name__, instance_relative_config=True)
 config = Configuration()
@@ -10,9 +11,11 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/devices')
-@app.route('/devices/')
-def devices():
+@app.route('/devices', methods=['GET', 'POST'])
+@app.route('/devices/', methods=['GET', 'POST'])
+def devices(format=None):
+    if format == 'json':
+        return jsonify({dev.name: dev.data.to_config() for dev in config.devices})
     g.devices = config.devices
     print(g.devices)
     return render_template('devices.html')
@@ -20,25 +23,56 @@ def devices():
 
 @app.route('/<string:dev>/device', methods=['GET', 'POST'])
 @app.route('/<string:dev>/device/', methods=['GET', 'POST'])
-def device(dev):
+def device(dev, format=None):
+    dev_config = None
     for device_config in config.devices:
         if device_config.name == dev:
-            g.device = device_config
+            dev_config = device_config
             break
     if request.method == 'POST':
-        name = request.form['device_name']
-        if name != g.device.data.name or name != g.device.data._capabilities['name']:
-            g.device.data.name = name
-            g.device.data._capabilities['name'] = name
-            g.device.data.set_name(name)
-            config.set_device(g.device)
+        print(request.form)
+        name = request.form['name']
+        effect = request.form['effect']
+        duration = int(request.form['duration'])
+        color_flow = request.form['color_flow']
+        should_update = False
+        if name != dev_config.data.name or name != dev_config.data.capabilities['name']:
+            dev_config.data.name = name
+            dev_config.data.capabilities['name'] = name
+            dev_config.data.last_properties['name'] = name
+            dev_config.data.set_name(name)
+            should_update = True
+            print('Updating name')
+        if effect != dev_config.data.effect:
+            dev_config.data.effect = effect
+            should_update = True
+            print('Updating effect')
+        if duration != dev_config.data.duration:
+            dev_config.data.duration = duration
+            should_update = True
+            print('Updating duration')
+        if color_flow != dev_config.data.color_flow_mode:
+            dev_config.data.color_flow_mode = color_flow
+            should_update = True
+            print('Updating color flow')
+
+        if should_update:
+            config.set_device(dev_config)
+    elif format == 'json':
+        return jsonify(dev_config.data.to_config())
+
+    g.device = dev_config
 
     return render_template('device.html')
 
 
-@app.route('/schemes')
-@app.route('/schemes/')
-def schemes():
+@app.route('/schemes', methods=['GET', 'POST'])
+@app.route('/schemes/', methods=['GET', 'POST'])
+def schemes(format=None):
+    if format == 'json' and request.method == 'GET':
+        return jsonify()
+    g.schemes = config.color_schemes
+
     return 'Hello'
 
 
@@ -59,15 +93,3 @@ def info_view():
         'delete color scheme': 'DELETE /api/v1/schemes/<scheme>'
     }
     return jsonify(output)
-
-
-@app.route('/api/v1/devices', methods=['GET'])
-def get_devices():
-    return
-
-
-@app.route('/api/v1/<string:dev>/device/<string:name>', methods=['POST'])
-def set_device(dev, name):
-    print(name)
-    config.devices.name = name
-    return g.device

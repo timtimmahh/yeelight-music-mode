@@ -1,7 +1,6 @@
 import numpy as np
 from pyaudio import PyAudio, paFloat32
 from aubio import pitch, tempo, digital_filter
-from sys import exit
 from multiprocessing import Queue, Event
 
 

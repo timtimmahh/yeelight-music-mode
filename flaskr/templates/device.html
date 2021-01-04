@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block header %}
+    <h1>
+        ID: {{ g.device.name }}<br><br>
+        Model: {{ g.device.data.model }}<br><br>
+    </h1>
+{% endblock %}
+{% block content %}
+    <script>
+        function updateTextInput(val) {
+            document.getElementById('durationInput').value = val;
+        }
+    </script>
+    <h3>IP: {{ g.device.data.ip }} Port: {{ g.device.data.port }}</h3>
+    <form method="post">
+        <div>
+            <label for="device_name">Name:</label>
+            <input id="device_name" name="device_name" type="text"
+                   value="{{ g.device.data['capabilities']['name'] }}">
+        </div>
+        <label for="effect">Effect:</label>
+        <select name="effect" id="effect">
+            <option value="smooth">Smooth</option>
+            <option value="sudden">Sudden</option>
+        </select>
+        <div style="text-align: center; width:100%; display: flex; margin-top: 10px">
+            <label for="duration" style="display: block; line-height: 150%; text-align: center">Duration:</label>
+            <input style="width:100%" id="duration" name="duration" type="range"
+                   min="30"
+                   max="1000"
+                   value="{{ g.device.data.duration }}"
+                   oninput="durationInput.value=value">
+            <input size="4"
+                   type="number"
+                   id="durationInput"
+                   maxlength="4" value="{{ g.device.data.duration }}">
+        </div>
+        <button type="submit">Update</button>
+    </form>
+{% endblock %}

@@ -1,20 +1,27 @@
 from Listener import Listener
 from Configuration import Configuration, discover_bulbs
-from multiprocessing import Process, Queue, Event, Pool
+from multiprocessing import Process, Queue, Event
 
 
 def audio_callback_process(device, signal_filter, get_pitch, get_tempo,
                            data_queue: Queue, stop_event: Event):
     device.data.start_music()
     while not stop_event.is_set():
-        signals = data_queue.get()
-        if stop_event.is_set():
+        try:
+            signals = data_queue.get()
+            if stop_event.is_set():
+                break
+            f_sig = signal_filter(signals)
+            pitch = get_pitch(f_sig)[0] / 128.0
+            is_beat = get_tempo(f_sig)
+            if is_beat > 0.:
+                device.data.set_color(pitch)
+        except KeyboardInterrupt:
+            print('Process exiting...')
             break
-        f_sig = signal_filter(signals)
-        pitch = get_pitch(f_sig)[0] / 128.0
-        is_beat = get_tempo(f_sig)
-        if is_beat > 0.:
-            device.data.set_color(pitch)
+        except ValueError as e:
+            print(e)
+            break
     device.data.stop_music()
 
 

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block header %}
+    <h1>{% block title %}Devices{% endblock %}</h1>
+{% endblock %}
+{% block content %}
+<ol>
+    {% for dev in g.devices %}
+        <li>
+            <a href="{{ url_for('device', dev=dev['capabilities']['id']) }}">
+                {{ dev['capabilities']['id'] }} - {{ dev['ip'] }}:{{ dev['port'] }}
+            </a>
+        </li>
+    {% endfor %}
+</ol>
+{% endblock %}

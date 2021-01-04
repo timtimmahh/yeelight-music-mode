@@ -1,14 +1,7 @@
-# import configparser
 from json import dump, load
 from yeelight import discover_bulbs as discover
 from Types import MusicBulb, ColorFlow
-import yeelight.flows
 from os.path import exists
-
-
-# parser = configparser.ConfigParser()
-# with open('config.ini') as cfg:
-#     parser.read_file(cfg)
 
 
 def read_config():
@@ -51,8 +44,10 @@ class Configuration:
         
     def set_device(self, device):
         for i in range(len(self.devices)):
-            if self.devices[i].name == device.dev_id:
+            if self.devices[i].name == device.name:
                 self.devices[i] = device
+                save_config()
+                break
 
     @property
     def devices(self):

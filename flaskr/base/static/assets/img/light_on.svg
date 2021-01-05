@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" x="0px" y="0px" width="240" height="240"
+    viewBox="0 0 226 226" style="fill:#000000;">
+    <defs>
+        <radialGradient cx="99.87317" cy="175.87979" r="56.87196" id="color-1_kDPHHp80u2xF_gr1">
+            <stop offset="0" stop-color="#6e757b" />
+            <stop offset="1" stop-color="#4a4e52" />
+        </radialGradient>
+        <linearGradient x1="95.39083" y1="44.11708" x2="142.12575" y2="190.292"
+            gradientUnits="userSpaceOnUse" id="color-2_kDPHHp80u2xF_gr2">
+            <stop offset="0" stop-color="#ffda1c" />
+            <stop offset="1" stop-color="#feb705" />
+        </linearGradient>
+        <linearGradient x1="148.91046" y1="-33.88587" x2="231.24508" y2="170.25333"
+            gradientUnits="userSpaceOnUse" id="color-3_kDPHHp80u2xF_gr3">
+            <stop offset="0" stop-color="#ffda1c" />
+            <stop offset="1" stop-color="#feb705" />
+        </linearGradient>
+        <linearGradient x1="-4.972" y1="28.17938" x2="77.36262" y2="232.31858"
+            gradientUnits="userSpaceOnUse" id="color-4_kDPHHp80u2xF_gr4">
+            <stop offset="0" stop-color="#ffda1c" />
+            <stop offset="1" stop-color="#feb705" />
+        </linearGradient>
+        <linearGradient x1="103.00421" y1="-15.368" x2="185.33883" y2="188.77121"
+            gradientUnits="userSpaceOnUse" id="color-5_kDPHHp80u2xF_gr5">
+            <stop offset="0" stop-color="#ffda1c" />
+            <stop offset="1" stop-color="#feb705" />
+        </linearGradient>
+        <linearGradient x1="104.43083" y1="-15.94712" x2="186.76546" y2="188.19208"
+            gradientUnits="userSpaceOnUse" id="color-6_kDPHHp80u2xF_gr6">
+            <stop offset="0" stop-color="#ffda1c" />
+            <stop offset="1" stop-color="#feb705" />
+        </linearGradient>
+        <linearGradient x1="39.50762" y1="10.24062" x2="121.84225" y2="214.37983"
+            gradientUnits="userSpaceOnUse" id="color-7_kDPHHp80u2xF_gr7">
+            <stop offset="0" stop-color="#ffda1c" />
+            <stop offset="1" stop-color="#feb705" />
+        </linearGradient>
+        <linearGradient x1="-4.37875" y1="27.93925" x2="77.95587" y2="232.07846"
+            gradientUnits="userSpaceOnUse" id="color-8_kDPHHp80u2xF_gr8">
+            <stop offset="0" stop-color="#ffda1c" />
+            <stop offset="1" stop-color="#feb705" />
+        </linearGradient>
+        <linearGradient x1="148.31721" y1="-33.64575" x2="230.65654" y2="170.49346"
+            gradientUnits="userSpaceOnUse" id="color-9_kDPHHp80u2xF_gr9">
+            <stop offset="0" stop-color="#ffda1c" />
+            <stop offset="1" stop-color="#feb705" />
+        </linearGradient>
+    </defs>
+    <g fill="none" stroke="none" stroke-width="1" stroke-miterlimit="10" stroke-dasharray=""
+        stroke-dashoffset="0" font-family="none" font-size="none" style="mix-blend-mode: normal">
+        <path d="M0,226v-226h226v226z" fill="none" />
+        <g>
+            <path
+                d="M141.25,178.91667h-56.5c0,4.02562 0,11.3 0,11.3c0,15.60342 12.64658,28.25 28.25,28.25c15.60342,0 28.25,-12.64658 28.25,-28.25c0,0 0,-7.27437 0,-11.3z"
+                fill="url(#color-1_kDPHHp80u2xF_gr1)" />
+            <path
+                d="M169.5,98.875c0,-31.20212 -25.29788,-56.5 -56.5,-56.5c-31.20212,0 -56.5,25.29788 -56.5,56.5c0,32.95833 28.25,56.5 28.25,74.39167v5.65h56.5v-5.65c0,-17.89167 28.25,-41.43333 28.25,-74.39167z"
+                fill="url(#color-2_kDPHHp80u2xF_gr2)" />
+            <circle cx="43" cy="21" transform="scale(4.70833,4.70833)" r="2"
+                fill="url(#color-3_kDPHHp80u2xF_gr3)" />
+            <circle cx="5" cy="21" transform="scale(4.70833,4.70833)" r="2"
+                fill="url(#color-4_kDPHHp80u2xF_gr4)" />
+            <circle cx="24" cy="2" transform="scale(4.70833,4.70833)" r="2"
+                fill="url(#color-5_kDPHHp80u2xF_gr5)" />
+            <circle cx="37.435" cy="34.435" transform="scale(4.70833,4.70833)" r="2"
+                fill="url(#color-6_kDPHHp80u2xF_gr6)" />
+            <circle cx="10.565" cy="7.565" transform="scale(4.70833,4.70833)" r="2"
+                fill="url(#color-7_kDPHHp80u2xF_gr7)" />
+            <circle cx="10.565" cy="34.435" transform="scale(4.70833,4.70833)" r="2"
+                fill="url(#color-8_kDPHHp80u2xF_gr8)" />
+            <circle cx="37.435" cy="7.565" transform="scale(4.70833,4.70833)" r="2"
+                fill="url(#color-9_kDPHHp80u2xF_gr9)" />
+        </g>
+    </g>
+</svg>

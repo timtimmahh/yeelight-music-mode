@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="240" height="240"
+    viewBox="0 0 226 226" style=" fill:#000000;">
+    <defs>
+        <radialGradient cx="75.83242" cy="1361.05204" r="110.31625" id="color-1_QfpWr2gFM07s_gr1">
+            <stop offset="0" stop-color="#6e757b" />
+            <stop offset="1" stop-color="#4a4e52" />
+        </radialGradient>
+        <linearGradient x1="77.05187" y1="13.35754" x2="134.15454" y2="124.55425"
+            gradientUnits="userSpaceOnUse" id="color-2_QfpWr2gFM07s_gr2">
+            <stop offset="0" stop-color="#ffda1c" />
+            <stop offset="1" stop-color="#feb705" />
+        </linearGradient>
+    </defs>
+    <g fill="none" stroke="none" stroke-width="1" stroke-miterlimit="10" stroke-dasharray=""
+        stroke-dashoffset="0" font-family="none" font-size="none" style="mix-blend-mode: normal">
+        <path d="M0,226v-226h226v226z" fill="none" />
+        <g>
+            <path
+                d="M141.25,160.08333h-56.5c0,4.02562 0,18.59792 0,18.59792c0,15.60342 12.64658,28.25 28.25,28.25c15.60342,0 28.25,-12.64658 28.25,-28.25c0,0 0,-14.57229 0,-18.59792z"
+                fill="url(#color-1_QfpWr2gFM07s_gr1)" />
+            <path
+                d="M169.5,75.33333c0,-31.20212 -25.29788,-56.5 -56.5,-56.5c-31.20212,0 -56.5,25.29787 -56.5,56.5c0,32.95833 28.25,56.5 28.25,74.39167v10.35833h56.5v-10.35833c0,-17.89167 28.25,-41.43333 28.25,-74.39167z"
+                fill="url(#color-2_QfpWr2gFM07s_gr2)" />
+        </g>
+    </g>
+</svg>

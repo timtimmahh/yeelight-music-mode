@@ -1,7 +1,15 @@
-from Configuration import Configuration
-from LightController import Controller
+from decouple import config
+from config import config_dict
+from flaskr import create_app
+
+DEBUG = config('DEBUG', default=True)
+
+# The configuration
+get_config_mode = 'Debug' if DEBUG else 'Production'
+
+app_config = config_dict[get_config_mode.capitalize()]
+
+app = create_app(app_config)
 
 if __name__ == '__main__':
-    config = Configuration()
-    controller = Controller(config)
-    controller.start_music()
+    app.run()

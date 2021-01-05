@@ -15,9 +15,9 @@ def audio_callback_process(device, signal_filter, get_pitch, get_tempo,
     :param Queue data_queue: A queue used to obtain audio signal data.
     :param Event stop_event: An event for being notified when the process should stop.
     """
-    if device.data.music_mode:
-        device.data.stop_music()
-    device.data.start_music()
+    if device.music_mode:
+        device.stop_music()
+    device.start_music()
     while not stop_event.is_set():
         try:
             signals = data_queue.get()
@@ -34,7 +34,7 @@ def audio_callback_process(device, signal_filter, get_pitch, get_tempo,
         except ValueError as e:
             print(e)
             break
-    device.data.stop_music()
+    device.stop_music()
 
 
 class Controller(object):

@@ -3,13 +3,6 @@ from flask import jsonify, render_template, g, request
 from flaskr.home import blueprint
 
 
-def get_device(device):
-    for device_config in config.devices:
-        if device_config.name == device:
-            return device_config
-    return None
-
-
 def parse_post_data(device, form):
     def update_name(name):
         if name != device.data.name or name != device.data.capabilities['name']:
@@ -57,4 +50,14 @@ def parse_post_data(device, form):
 @blueprint.route('/device/<string:device>', methods=['GET', 'POST'])
 def device_update(device, **post_data):
     if request.method == 'POST':
-        parse_post_data(get_device(device), **post_data)
+        parse_post_data(config.devices[device], **post_data)
+
+
+@blueprint.route('/device/<string:dev_id>/toggle')
+def toggle(dev_id):
+    device = config.devices[dev_id]
+    print(device)
+    state = device.capabilities['power']
+    if device.toggle() == 'ok':
+        device.capabilities['power'] = 'off' if state == 'on' else 'on'
+    return jsonify(original_state=state, new_state=device.capabilities['power'])

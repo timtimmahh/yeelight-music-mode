@@ -5,13 +5,13 @@ Copyright (c) 2019 - present AppSeed.us
 from flaskr import config
 from flaskr.home import blueprint
 from jinja2 import TemplateNotFound
-
 from flask import jsonify, render_template, g, request
+from .updates import *
 
 
 @blueprint.route('/index')
 def index():
-    g.devices = config.devices
+    g.devices = config.devices.values()
 
     return render_template('index.html')
 
@@ -29,13 +29,9 @@ def index():
 @blueprint.route('/<string:dev>/device', methods=['GET'])
 @blueprint.route('/<string:dev>/device/', methods=['GET'])
 def device(dev, format=None):
-    dev_config = None
-    for device_config in config.devices:
-        if device_config.name == dev:
-            dev_config = device_config
-            break
+    dev_config = config.devices[dev]
     if format == 'json':
-        return jsonify(dev_config.data.to_config())
+        return jsonify(dev_config.to_config())
 
     g.device = dev_config
 

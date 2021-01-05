@@ -1,8 +1,8 @@
 {% extends 'layouts/base.html' %}
 {% block header %}
     <h1>
-        ID: {{ g.device.name }}<br><br>
-        Model: {{ g.device.data.model }}<br><br>
+        ID: {{ g.device.dev_id }}<br><br>
+        Model: {{ g.device.model }}<br><br>
     </h1>
 {% endblock %}
 {% block content %}
@@ -11,16 +11,16 @@
             document.getElementById('durationInput').value = val;
         }
     </script>
-    <h3>IP: {{ g.device.data.ip }} Port: {{ g.device.data.port }}</h3>
+    <h3>IP: {{ g.device.ip }} Port: {{ g.device.port }}</h3>
     <form method="post">
         <div>
             <label for="name">Name:</label>
             <input id="name" name="name" type="text"
-                   value="{{ g.device.data['capabilities']['name'] }}">
+                   value="{{ g.device.name }}">
         </div>
         <label for="effect">Effect:</label>
         <select name="effect" id="effect">
-            {% if g.device.data.effect == 'smooth' %}
+            {% if g.device.effect == 'smooth' %}
                 <option value="smooth" selected>Smooth</option>
                 <option value="sudden">Sudden</option>
             {% else %}
@@ -34,18 +34,18 @@
             <input style="width:100%" id="duration" name="duration" type="range"
                    min="30"
                    max="1000"
-                   value="{{ g.device.data.duration }}"
+                   value="{{ g.device.duration }}"
                    oninput="durationInput.value=value">
             <!--suppress HtmlFormInputWithoutLabel -->
             <input size="4"
                    type="number"
                    id="durationInput"
-                   maxlength="4" value="{{ g.device.data.duration }}"
+                   maxlength="4" value="{{ g.device.duration }}"
                    oninput="duration.value=value">
         </div>
         <label for="color_flow">Color Flow Mode:</label>
         <select name="color_flow" id="color_flow">
-            {% if g.device.data.color_flow_mode == 'rgb' %}
+            {% if g.device.color_flow_mode == 'rgb' %}
                 <option value="rgb" selected>RGB</option>
                 <option value="hsv">HSV</option>
             {% else %}

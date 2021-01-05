@@ -6,7 +6,20 @@ from yeelight import Bulb, PowerMode
 
 class ColorFlow(ABC):
 
-    def __init__(self, name: str, color_ranges=tuple()):
+    @classmethod
+    def from_config(cls, cs_id: str, scheme: dict):
+        return cls(
+            cs_id,
+            *tuple(range(min_val, max_val) for min_val, max_val in scheme['ranges'])
+        )
+
+    def to_config(self):
+        return dict(
+            ft=self.flow_type,
+            ranges=list(self.ranges)
+        )
+
+    def __init__(self, name: str, flow_type: str, color_ranges=tuple()):
         """
         A music flow configuration.
 
@@ -14,6 +27,7 @@ class ColorFlow(ABC):
         """
         super().__init__()
         self.name = name
+        self.flow_type = flow_type
         self.ranges = tuple((cr.start, cr.stop - 1) for cr in color_ranges)
 
     @property
@@ -32,8 +46,8 @@ class ColorFlow(ABC):
         :param Bulb bulb: the bulb to set color.
         """
         self.set_bulb_color(
-                bulb,
-                *(max_val * factor for (min_val, max_val) in self.ranges)
+            bulb,
+            *(max_val * factor for (min_val, max_val) in self.ranges)
         )
 
 
@@ -54,7 +68,8 @@ class RGBColorFlow(ColorFlow):
         if name is None and red_range == range(256) and green_range == range(256) \
                 and blue_range == range(256):
             name = f'Default{RGBColorFlow.__name__}'
-        super().__init__(name=name, color_ranges=(red_range, green_range, blue_range))
+        super().__init__(name=name, flow_type='rgb',
+                         color_ranges=(red_range, green_range, blue_range))
 
     @property
     def set_bulb_color(self):
@@ -78,7 +93,11 @@ class HSVColorFlow(ColorFlow):
         """
         if name is None and hue_range == range(400) and saturation_range == range(101):
             name = f'Default{HSVColorFlow.__name__}'
-        super().__init__(name=name, color_ranges=(hue_range, saturation_range, (100, 100)))
+        super().__init__(
+            name=name,
+            flow_type='hsv',
+            color_ranges=(hue_range, saturation_range, (100, 100))
+        )
 
     @property
     def set_bulb_color(self):
@@ -185,16 +204,16 @@ class MusicBulb(Bulb):
         Converts this device to a dictionary in order to save data to config file.
         """
         return dict(
-                ip=self.ip,
-                port=self.port,
-                effect=self.effect,
-                duration=self.duration,
-                auto_on=self.auto_on,
-                power_mode=self.power_mode,
-                model=self.model,
-                capabilities=self.capabilities,
-                properties=self.last_properties,
-                color_flow=self.color_flow_mode
+            ip=self.ip,
+            port=self.port,
+            effect=self.effect,
+            duration=self.duration,
+            auto_on=self.auto_on,
+            power_mode=self.power_mode,
+            model=self.model,
+            capabilities=self.capabilities,
+            properties=self.last_properties,
+            color_flow=self.color_flow_mode
         )
 
     @classmethod
@@ -205,10 +224,11 @@ class MusicBulb(Bulb):
         :param dict data: The data from bulb discover.
         """
         return MusicBulb(
-                ip=data['ip'],
-                port=data['port'],
-                model=data['capabilities']['model'],
-                capabilities=data['capabilities']
+            ip=data['ip'],
+            port=data['port'],
+            model=data['capabilities']['model'],
+            dev_id=data['capabilities']['id'],
+            capabilities=data['capabilities']
         )
 
     @classmethod
@@ -220,15 +240,15 @@ class MusicBulb(Bulb):
         :param dict data: The config data to use.
         """
         return MusicBulb(
-                ip=data['ip'],
-                port=data['port'],
-                effect=data['effect'],
-                duration=data['duration'],
-                auto_on=data['auto_on'],
-                power_mode=data['power_mode'],
-                model=data['model'],
-                dev_id=dev_id,
-                capabilities=data['capabilities'],
-                properties=data['properties'],
-                color_flow=HSVColorFlow() if data['color_flow'] == 'hsv' else RGBColorFlow()
+            ip=data['ip'],
+            port=data['port'],
+            effect=data['effect'],
+            duration=data['duration'],
+            auto_on=data['auto_on'],
+            power_mode=data['power_mode'],
+            model=data['model'],
+            dev_id=dev_id,
+            capabilities=data['capabilities'],
+            properties=data['properties'],
+            color_flow=HSVColorFlow() if data['color_flow'] == 'hsv' else RGBColorFlow()
         )

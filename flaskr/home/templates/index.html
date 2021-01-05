@@ -8,29 +8,46 @@
 {% endblock stylesheets %}
 
 {% block content %}
-
+    <script src="/static/assets/js/core/jquery.min.js"></script>
     <div class="row">
         {% for device in g.devices %}
-            <div class="col-md-4" id="{{ device.name }}">
+            <script type=text/javascript>
+                $(function () {
+                    const deviceId = "{{ device.dev_id }}";
+                    $('div#{{ device.dev_id }}_header').on('click', function (e) {
+                        console.log('Clicked: ' + deviceId);
+                        e.preventDefault();
+                        $.getJSON('{{ url_for('home_blueprint.toggle', dev_id=device.dev_id) }}',
+                            function (data) {
+                                $('img#{{ device.dev_id }}_power_state').attr({
+                                    alt: 'Power ' + data.new_state,
+                                    src: '/static/assets/img/light_' + data.new_state + '.svg'
+                                });
+                            });
+                        return false;
+                    });
+                });
+            </script>
+            <div class="col-md-4" id="{{ device.dev_id }}">
                 <div class="card card-link">
-                    <div class="card-header card-header-info" onclick="toggleDevice({{ device }})">
+                    <div class="card-header card-header-info" id="{{ device.dev_id }}_header">
                         <div class="card-header-icon" id="device_state_icon">
-                            <img alt="Power {{ device.data.capabilities['power'] }}"
-                                 id="device_power_state"
-                                 src="/static/assets/img/light_{{ device.data.capabilities['power'] }}.svg"/>
+                            <img alt="Power {{ device.capabilities['power'] }}"
+                                 id="{{ device.dev_id }}_power_state"
+                                 src="/static/assets/img/light_{{ device.capabilities['power'] }}.svg"/>
                         </div>
                     </div>
                     <div class="card-body">
-                        <h4 class="card-title">{{ device.data.name }} ({{ device.name }})</h4>
+                        <h4 class="card-title">{{ device.name }} ({{ device.dev_id }})</h4>
                         <p class="card-category">
-                            Location: {{ device.data.ip }}:{{ device.data.port }}
+                            Location: {{ device.ip }}:{{ device.port }}
                         </p>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
                             <i class="material-icons">access_time</i> updated 4 minutes ago
                         </div>
-                        {% if device.data.music_mode %}
+                        {% if device.music_mode %}
                             <div class="card-icon">
                                 <svg id="wave" data-name="Layer 1" height="36"
                                      viewBox="0 -47 354.98667 354" width="36"
@@ -72,13 +89,10 @@
 {% block javascripts %}
 
     <script type="application/javascript">
-        function toggleDevice(device) {
-            console.log('toggling device: ' + device)
-            const state = device.data.capabilities['power'];
-            if (device.data.toggle() === 'ok') {
-                device.data.capabilities['power'] = state === 'on' ? 'off' : 'on'
-            }
-        }
+        {#function toggleDevice(device) {
+            console.log(device)
+            {{ toggle(device) }}
+        }#}
 
         {#$(document).ready(function () {
             // Javascript method's body can be found in assets/js/demos.js

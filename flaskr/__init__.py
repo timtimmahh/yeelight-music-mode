@@ -1,6 +1,6 @@
 from flask import Flask
 from importlib import import_module
-from ymm import Configuration, Controller
+from ymm import Configuration, Controller, MusicBulb
 
 config = Configuration()
 controller = Controller(config)

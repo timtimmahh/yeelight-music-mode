@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from json import dumps
+import asyncio
 
 from yeelight import Bulb, PowerMode
 
@@ -193,6 +194,22 @@ class MusicBulb(Bulb):
         :param float factor: The converted audio data to calculate color.
         """
         self.color_flow.set_color(factor, self)
+
+    def prop_listener(self, handle_props):
+        def prop_callback(data):
+            for key, value in data.items():
+                if hasattr(self, key):
+                    setattr(self, key, value)
+                if key in self.last_properties:
+                    self.last_properties[key] = value
+                if key in self.capabilities:
+                    self.capabilities[key] = value
+            handle_props(data)
+
+        async def listener():
+            await asyncio.to_thread(self.listen(prop_callback))
+
+        return listener
 
     def __repr__(self):
         return dumps({

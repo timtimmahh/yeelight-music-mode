@@ -56,7 +56,6 @@ def device_update(device, **post_data):
 @blueprint.route('/device/<string:dev_id>/toggle')
 def toggle(dev_id):
     device = config.devices[dev_id]
-    print(device)
     state = device.capabilities['power']
     if device.toggle() == 'ok':
         device.capabilities['power'] = 'off' if state == 'on' else 'on'
